@@ -22,7 +22,7 @@ st.set_page_config(
 # CONSTANTES
 # ===========================
 
-DEFAULT_BACKEND_URL = "https://langgraph-content-engine.onrender.com/gerar"
+DEFAULT_BACKEND_URL = "https://langgraph-content-engine.onrender.com"
 
 # ===========================
 # FUNÇÕES AUXILIARES
