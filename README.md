@@ -23,8 +23,6 @@ The platform includes:
 - **Rate Limiting Protection** to prevent API throttling
 - **Cost Monitoring** with token usage and cost estimation
 
-Optimized for **Portuguese language** content generation, making it ideal for Brazilian and Portuguese markets requiring high-quality AI-generated blog posts and articles.
-
 ---
 
 ## 🏗️ System Architecture
@@ -92,7 +90,7 @@ The system is designed as a **State Machine** (Directed Graph with cycles):
        ▼                          │
 ┌─────────────────────┐           │
 │  Revisor (Reviewer) │           │
-│ • Rate limit (1.5s) │           │
+│ • Rate limit (3.0s) │           │
 │ • Evaluate quality  │           │
 │ • Log decision      │           │
 │ • Track tokens      │           │
@@ -317,7 +315,7 @@ print(f"Final text: {result['texto_final']}")
 
 ### 🛡️ Rate Limiting Protection
 
-- **API Delays**: 1.5-second pause before each LLM call
+- **API Delays**: 3.0-second pause before each LLM call
 - **Iteration Limits**: Maximum 3 iterations to prevent runaway loops
 - **Automatic Throttling**: Respects Anthropic API rate limits
 - **Error Recovery**: Graceful handling of rate limit errors
@@ -431,51 +429,10 @@ Learn LangGraph state machines, multi-agent orchestration, and production-grade 
 ### Rate Limiting Strategy
 
 To prevent HTTP 429 errors from Anthropic API:
-- **1.5-second delay** before each LLM call
+- **3.0-second delay** before each LLM call
 - **Maximum 3 iterations** enforced by router
 - Supports up to **40 requests/minute** with delays
 - Compatible with Anthropic's rate limits (50 RPM for Build Tier 1)
-
----
-
-## 🚧 Future Enhancements
-
-### Planned Features
-
-- **Multi-language Support**: Extend beyond Portuguese
-- **Custom Prompt Testing**: Allow users to test modified prompts
-- **Database Persistence**: Store execution history in SQLite/PostgreSQL
-- **Real-time Streaming**: Stream content generation to frontend
-- **A/B Testing**: Compare different prompt versions
-- **User Authentication**: Add auth layer for multi-user deployments
-- **Export Formats**: Markdown, HTML, PDF export options
-- **Analytics Dashboard**: Aggregated metrics across all executions
-- **Webhook Integration**: Notify external systems on completion
-- **Model Selection**: Support multiple Claude models (Opus, Haiku)
-
----
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-**HTTP 429 Rate Limit Errors**
-- Ensure rate limiting is enabled (1.5s delays in `app.py`)
-- Check iteration limit is set to 3 in `decidir_proximo_passo()`
-- Verify Anthropic API tier and limits
-
-**Streamlit Connection Errors**
-- Verify backend URL in sidebar configuration
-- Check backend is running on correct port
-- Test health endpoint: `curl http://localhost:8000/health`
-
-**Missing Dependencies**
-- Reinstall: `pip install -r requirements.txt --force-reinstall`
-- Check Python version: `python --version` (need 3.11+)
-
-**API Key Issues**
-- Verify `.env` file exists and contains valid keys
-- Check environment variables: `python -c "import os; print(os.getenv('ANTHROPIC_API_KEY'))"`
 
 ---
 
@@ -507,4 +464,4 @@ This project is available for educational and research purposes.
 
 **Version**: 2.0.0
 **Status**: Production-Ready
-**Last Updated**: 2024-01-15
+**Last Updated**: 2026-02-18
