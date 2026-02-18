@@ -7,7 +7,7 @@ st.title("Autonomous Content Generation")
 st.markdown("Iterative Writer-Reviewer Loop powered by LangGraph")
 
 # Replace this with your NEW Render URL after deployment
-BACKEND_URL = "https://your-project-name.onrender.com/gerar"
+BACKEND_URL = "https://langgraph-content-engine.onrender.com/gerar"
 
 tema = st.text_input("Enter the topic for your post:", placeholder="The future of AI in 2026...")
 
