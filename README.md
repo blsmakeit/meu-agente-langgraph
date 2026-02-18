@@ -13,6 +13,8 @@
 
 This project implements an **Enterprise-Grade AI Operations (AIOps) Platform** that transforms simple content generation into a fully tracked, monitored, and optimized workflow.
 
+Test app here: https://meu-redator-ia.streamlit.app/
+
 By leveraging **LangGraph**, the system maintains a persistent state across an iterative loop between two specialized agents: a **Writer** (Redator) and a **Reviewer** (Revisor). Unlike traditional single-shot AI generation, this system ensures outputs undergo rigorous internal validation and progressive refinement before delivery.
 
 The platform includes:
