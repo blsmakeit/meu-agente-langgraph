@@ -12,7 +12,7 @@ from typing import Dict, Any, Optional
 # ===========================
 
 st.set_page_config(
-    page_title="🧠 AIOps Command Center",
+    page_title="AIOps Command Center",
     page_icon="🧠",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -27,133 +27,6 @@ DEFAULT_BACKEND_URL = "https://langgraph-content-engine.onrender.com"
 # ===========================
 # FUNÇÕES AUXILIARES
 # ===========================
-
-def inject_cyberpunk_css():
-    """Inject custom CSS for cyberpunk aesthetic"""
-    st.markdown("""
-    <style>
-        /* Global dark background */
-        .stApp {
-            background: linear-gradient(135deg, #0a0e27 0%, #16213e 100%);
-        }
-
-        /* Neon borders for containers */
-        .element-container {
-            border-left: 2px solid #00ff41;
-            padding-left: 10px;
-            margin: 5px 0;
-        }
-
-        /* Monospace fonts for code/logs */
-        .stCodeBlock, .stCode {
-            font-family: 'Courier New', monospace !important;
-            background-color: #0d1117 !important;
-            border: 1px solid #00ff41 !important;
-            box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
-        }
-
-        /* Neon glow for metrics */
-        [data-testid="stMetricValue"] {
-            color: #00ff41 !important;
-            text-shadow: 0 0 10px rgba(0, 255, 65, 0.8);
-            font-family: 'Courier New', monospace !important;
-            font-size: 2rem !important;
-        }
-
-        [data-testid="stMetricLabel"] {
-            color: #00ffff !important;
-            font-family: 'Courier New', monospace !important;
-        }
-
-        [data-testid="stMetricDelta"] {
-            color: #ff00ff !important;
-            font-family: 'Courier New', monospace !important;
-        }
-
-        /* Cyberpunk buttons */
-        .stButton > button {
-            background: linear-gradient(45deg, #ff00ff, #00ffff) !important;
-            color: #000 !important;
-            font-weight: bold !important;
-            border: none !important;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5) !important;
-            transition: all 0.3s ease !important;
-        }
-
-        .stButton > button:hover {
-            box-shadow: 0 0 30px rgba(255, 0, 255, 0.8) !important;
-            transform: translateY(-2px) !important;
-        }
-
-        /* Tab styling */
-        .stTabs [data-baseweb="tab-list"] {
-            background-color: #0d1117 !important;
-            border-bottom: 2px solid #00ff41 !important;
-        }
-
-        .stTabs [data-baseweb="tab"] {
-            color: #00ff41 !important;
-            font-family: 'Courier New', monospace !important;
-            font-weight: bold !important;
-        }
-
-        .stTabs [aria-selected="true"] {
-            background-color: #1a1a2e !important;
-            border-bottom: 3px solid #ff00ff !important;
-        }
-
-        /* Expander headers */
-        .streamlit-expanderHeader {
-            background-color: #0d1117 !important;
-            border: 1px solid #00ff41 !important;
-            font-family: 'Courier New', monospace !important;
-            color: #00ff41 !important;
-        }
-
-        /* Sidebar styling */
-        [data-testid="stSidebar"] {
-            background: linear-gradient(180deg, #0f0f0f 0%, #1a1a2e 100%) !important;
-            border-right: 2px solid #00ff41 !important;
-        }
-
-        /* Headers */
-        h1, h2, h3 {
-            color: #00ff41 !important;
-            font-family: 'Courier New', monospace !important;
-            text-shadow: 0 0 10px rgba(0, 255, 65, 0.5) !important;
-        }
-
-        /* Text areas */
-        .stTextArea textarea {
-            background-color: #0d1117 !important;
-            border: 1px solid #00ff41 !important;
-            color: #00ff41 !important;
-            font-family: 'Courier New', monospace !important;
-        }
-
-        /* Dataframe styling */
-        .stDataFrame {
-            border: 2px solid #00ff41 !important;
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.3) !important;
-        }
-
-        /* Success/Warning/Error messages */
-        .stSuccess {
-            background-color: rgba(0, 255, 65, 0.1) !important;
-            border: 1px solid #00ff41 !important;
-        }
-
-        .stWarning {
-            background-color: rgba(255, 165, 0, 0.1) !important;
-            border: 1px solid #ffa500 !important;
-        }
-
-        .stError {
-            background-color: rgba(255, 0, 255, 0.1) !important;
-            border: 1px solid #ff00ff !important;
-        }
-    </style>
-    """, unsafe_allow_html=True)
 
 def make_api_request(url: str, endpoint: str, data: Optional[Dict] = None, method: str = "POST") -> Optional[Dict[str, Any]]:
     """
@@ -215,25 +88,12 @@ def format_timestamp(timestamp_str: str) -> str:
 if 'last_response' not in st.session_state:
     st.session_state.last_response = None
 
-if 'developer_mode' not in st.session_state:
-    st.session_state.developer_mode = False
-
 # ===========================
 # SIDEBAR - CONTROL PANEL
 # ===========================
 
 with st.sidebar:
     st.title("⚙️ Control Panel")
-
-    # Developer Mode Toggle
-    developer_mode = st.toggle(
-        "🔧 Developer Mode",
-        value=st.session_state.developer_mode,
-        help="Ativa a visualização completa de métricas e logs técnicos"
-    )
-    st.session_state.developer_mode = developer_mode
-
-    st.divider()
 
     # API Configuration
     st.subheader("🔌 API Configuration")
@@ -268,10 +128,6 @@ with st.sidebar:
     # About
     st.caption("🧠 AIOps Command Center v2.0")
     st.caption("Developed by **Bruno Sousa**")
-
-# Apply CSS if Developer Mode is ON
-if developer_mode:
-    inject_cyberpunk_css()
 
 # ===========================
 # MAIN CONTENT - TABS
@@ -361,14 +217,13 @@ with tab1:
                         st.markdown(response["texto_final"])
 
                         # Show quick metrics
-                        if developer_mode:
-                            col1, col2, col3 = st.columns(3)
-                            with col1:
-                                st.metric("Iterações", response["metricas"]["numero_iteracoes"])
-                            with col2:
-                                st.metric("Tempo", f"{response['metricas']['tempo_total_segundos']:.2f}s")
-                            with col3:
-                                st.metric("Custo", f"${response['metricas']['custo_estimado_usd']:.4f}")
+                        col1, col2, col3 = st.columns(3)
+                        with col1:
+                            st.metric("Iterações", response["metricas"]["numero_iteracoes"])
+                        with col2:
+                            st.metric("Tempo", f"{response['metricas']['tempo_total_segundos']:.2f}s")
+                        with col3:
+                            st.metric("Custo", f"${response['metricas']['custo_estimado_usd']:.4f}")
 
                         # Expander with reviewer feedback
                         with st.expander("💬 Ver Feedback do Revisor"):
@@ -527,15 +382,7 @@ with tab3:
                 }
             ))
 
-            if developer_mode:
-                fig_gauge.update_layout(
-                    paper_bgcolor="#0a0e27",
-                    plot_bgcolor="#0a0e27",
-                    font={'color': "#00ff41", 'family': "Courier New"},
-                    height=400
-                )
-            else:
-                fig_gauge.update_layout(height=400)
+            fig_gauge.update_layout(height=400)
 
             st.plotly_chart(fig_gauge, use_container_width=True)
 
@@ -555,22 +402,10 @@ with tab3:
                 textfont=dict(size=14, color='white')
             )])
 
-            if developer_mode:
-                fig_donut.update_layout(
-                    title=dict(
-                        text="Distribuição de Tokens",
-                        font=dict(color='#00ff41', size=20, family='Courier New')
-                    ),
-                    paper_bgcolor="#0a0e27",
-                    plot_bgcolor="#0a0e27",
-                    font={'color': "#00ff41", 'family': "Courier New"},
-                    height=400
-                )
-            else:
-                fig_donut.update_layout(
-                    title_text="Distribuição de Tokens",
-                    height=400
-                )
+            fig_donut.update_layout(
+                title_text="Distribuição de Tokens",
+                height=400
+            )
 
             st.plotly_chart(fig_donut, use_container_width=True)
 
@@ -679,22 +514,6 @@ with tab4:
 
             if st.button("📋 Copy Revisor Prompt", key="copy_revisor"):
                 st.success("✅ Prompt copiado! (funcionalidade visual)")
-
-        st.divider()
-
-        # Prompt Testing Area
-        st.subheader("🧬 Teste de Prompts Customizados")
-        st.markdown("*Funcionalidade em desenvolvimento*")
-
-        custom_prompt = st.text_area(
-            "Cole ou edite um prompt para testar",
-            height=200,
-            placeholder="Cole seu prompt customizado aqui...\n\nEsta funcionalidade permitirá testar variações de prompts e comparar resultados.",
-            disabled=True
-        )
-
-        if st.button("🚀 Testar Prompt", disabled=True):
-            st.info("🚧 Funcionalidade em desenvolvimento - será implementada na v2.1")
 
     else:
         st.error("❌ Não foi possível carregar os prompts do sistema")

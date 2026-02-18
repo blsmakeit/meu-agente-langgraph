@@ -91,6 +91,9 @@ def redator(state: EstadoEnriquecido) -> Dict:
 
     prompt = PROMPT_REDATOR.format(tema=tema, critica=critica)
 
+    # Delay para respeitar rate limits da API Anthropic
+    time.sleep(1.5)
+
     # Executar LLM
     resposta = llm.invoke(prompt)
     novo_rascunho = resposta.content
@@ -148,6 +151,9 @@ def revisor(state: EstadoEnriquecido) -> Dict:
 
     prompt = PROMPT_REVISOR.format(rascunho=rascunho)
 
+    # Delay para respeitar rate limits da API Anthropic
+    time.sleep(1.5)
+
     # Executar LLM
     resposta = llm.invoke(prompt)
     conteudo_resposta = resposta.content
@@ -200,10 +206,18 @@ def revisor(state: EstadoEnriquecido) -> Dict:
 def decidir_proximo_passo(state: EstadoEnriquecido):
     """
     Decide se o conteúdo está aprovado (END) ou precisa de mais iterações (redator).
+    Limita o número máximo de iterações para prevenir rate limiting.
     """
+    MAX_ITERACOES = 3  # Limite de iterações para prevenir rate limiting
+
     if state["aprovado"]:
         print("🎯 Conteúdo APROVADO - Finalizando workflow")
         return END
+
+    if state["iteracao_atual"] > MAX_ITERACOES:
+        print(f"⚠️ Limite de {MAX_ITERACOES} iterações atingido - Forçando fim do workflow")
+        return END
+
     print("🔄 Conteúdo precisa de revisão - Voltando ao Redator")
     return "redator"
 
